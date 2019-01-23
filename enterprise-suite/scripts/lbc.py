@@ -174,6 +174,13 @@ def check_kubectl(minishift=False):
             msg = msg + ". Did you do 'eval $(minishift oc-env)'?"
         fail(msg)
 
+def is_int(s):
+  try:
+    int(s)
+    return True
+  except:
+    return False
+
 def check_credentials(creds):
     registry = 'https://lightbend-docker-commercial-registry.bintray.io/v2'
     api_url = registry + '/enterprise-suite/es-monitor-api/tags/list'
@@ -183,7 +190,7 @@ def check_credentials(creds):
     if returncode == 0:
         stdout, returncode = run('curl -s -o /dev/null -w "%{http_code}" ' + ' --user {}:{} {}'
             .format(creds[0], creds[1], api_url), DEFAULT_TIMEOUT, show_stderr=True)
-        return int(stdout) == 200
+        return is_int(stdout) and int(stdout) == 200
 
     # Set up basic auth with given creds
     req = url.Request(api_url)
@@ -404,10 +411,10 @@ def install(creds_file):
                 .format(args.helm_name, chart_ref, version_arg,
                         creds_arg, helm_args))
         else:
-            createPVs = len(filter(lambda x: 'createPersistentVolumes=false' in x, sys.argv)) == 0
+            createPVs = len(filter(lambda x: 'managePersistentVolumes=false' in x, sys.argv)) == 0
             if createPVs and are_pvcs_created(args.namespace):
                 printerr('info: Found existing PVCs from a previous console installation.')
-                printerr('info: Please remove them with `kubectl delete pvc`, or pass --set createPersistentVolumes=false.')
+                printerr('info: Please remove them with `kubectl delete pvc`, or pass --set managePersistentVolumes=false.')
                 printerr('info: Otherwise, the install may fail.')
 
             execute('helm install {} --name {} --namespace {} {} {} {}'
