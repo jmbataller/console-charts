@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+## find any graph with IEC formats like "bytes", "kbytes"...
+
+iec_graphs=$( cat "$@" | jq '.[]|
+    select(.yaxes.format)|
+    select(.yaxes.format|test("^[kmg]{0,1}bytes$"))|
+    .graphName, .yaxes.format' | paste - - )
+
+if [ -n "$iec_graphs" ]; then
+    echo 'ERROR: found IEC units'
+    echo "$iec_graphs"
+    echo 'Please use metric format like "decbytes" instead of IEC bytes'
+    exit 1
+fi
+
+exit 0
