@@ -20,7 +20,7 @@
       }
     ],
     "yaxes": {
-      "format": "bytes"
+      "format": "decbytes"
     }
   },
   {
@@ -44,7 +44,7 @@
       }
     ],
     "yaxes": {
-      "format": "bytes"
+      "format": "decbytes"
     }
   },
   {
@@ -68,7 +68,7 @@
       }
     ],
     "yaxes": {
-      "format": "bytes"
+      "format": "decbytes"
     }
   },
   {

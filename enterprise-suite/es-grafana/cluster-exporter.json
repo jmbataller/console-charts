@@ -11,7 +11,7 @@
          "sum by (namespace) (container_memory_usage_bytes)"
       ],
       "yaxes": {
-         "format": "bytes"
+         "format": "decbytes"
       }
    },
    {
@@ -20,7 +20,7 @@
          "sum by (namespace) (container_fs_usage_bytes)"
       ],
       "yaxes": {
-         "format": "bytes"
+         "format": "decbytes"
       }
    },
    {
@@ -29,7 +29,7 @@
          "sum by (namespace) (rate(container_network_receive_bytes_total[1m]))"
       ],
       "yaxes": {
-         "format": "bytes"
+         "format": "decbytes"
       }
    },
    {
@@ -38,7 +38,7 @@
          "sum by (namespace) (rate(container_network_transmit_bytes_total[1m]))"
       ],
       "yaxes": {
-         "format": "bytes"
+         "format": "decbytes"
       }
    }
 ]
